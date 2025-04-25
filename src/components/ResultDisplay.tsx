@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteCalculationResult } from '@/utils/routeCalculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,7 +15,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result, planets }) => {
   
   if (!result.success) {
     return (
-      <Card className="bg-space-deep-blue border-space-danger-red">
+      <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-space-danger-red flex items-center gap-2">
             <Navigation size={20} />
@@ -36,8 +35,8 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result, planets }) => {
   });
 
   return (
-    <Card className="bg-space-deep-blue border-space-route-teal overflow-hidden">
-      <CardHeader className="pb-2 bg-space-nebula-purple bg-opacity-30">
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-2bg-opacity-30">
         <CardTitle className="text-space-route-teal flex items-center gap-2">
           <Navigation size={20} />
           Optimal Route Calculated
@@ -54,7 +53,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result, planets }) => {
           <div className="flex flex-wrap items-center gap-2">
             {pathNames.map((name, index) => (
               <React.Fragment key={`path-${index}`}>
-                <span className="px-3 py-1 bg-space-nebula-purple rounded-md text-white">
+                <span className="px-3 py-1 rounded-md text-white">
                   {name}
                 </span>
                 {index < pathNames.length - 1 && (

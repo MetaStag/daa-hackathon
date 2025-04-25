@@ -1,3 +1,5 @@
+import PriorityQueue from "./priority";
+
 // Data types for the interplanetary network
 export interface Planet {
   id: number;
@@ -32,20 +34,15 @@ export function calculateExpectedShortestPath(
   destinationId: number
 ): RouteCalculationResult {
   const numPlanets = network.planets.length;
-  
-  // Initialize arrays for expected distance and visited status
   const expectedDistance = Array(numPlanets).fill(Infinity);
   const visited = Array(numPlanets).fill(false);
   const previous = Array(numPlanets).fill(-1);
-  
-  // Start from source
+
   expectedDistance[sourceId] = 0;
-  
-  // Create adjacency list for faster access
-  const adjacencyList: { to: number; cost: number; failureProbability: number }[][] = 
+
+  // Build adjacency list
+  const adjacencyList: { to: number; cost: number; failureProbability: number }[][] =
     Array(numPlanets).fill(null).map(() => []);
-  
-  // Fill adjacency list
   for (const route of network.routes) {
     adjacencyList[route.from].push({
       to: route.to,
@@ -53,44 +50,32 @@ export function calculateExpectedShortestPath(
       failureProbability: route.failureProbability
     });
   }
-  
-  for (let i = 0; i < numPlanets; i++) {
-    // Find the planet with the minimum expected distance
-    let minDistance = Infinity;
-    let minIndex = -1;
-    
-    for (let j = 0; j < numPlanets; j++) {
-      if (!visited[j] && expectedDistance[j] < minDistance) {
-        minDistance = expectedDistance[j];
-        minIndex = j;
-      }
-    }
-    
-    // If we can't reach any more planets or we've reached the destination
-    if (minIndex === -1 || minIndex === destinationId) break;
-    
-    // Mark as visited
-    visited[minIndex] = true;
-    
-    // Update expected distances for all neighbors
-    for (const route of adjacencyList[minIndex]) {
+
+  // Min-heap priority queue for efficient next-node selection
+  const pq = new PriorityQueue<[number, number]>(); // [nodeId, currentExpectedCost]
+  pq.enqueue([sourceId, 0], 0);
+
+  while (!pq.isEmpty()) {
+    const [current] = pq.dequeue()!;
+    if (visited[current]) continue;
+    visited[current] = true;
+
+    if (current === destinationId) break;
+
+    for (const route of adjacencyList[current]) {
       const { to, cost, failureProbability } = route;
-      
-      // Calculate expected cost: (1-p) * direct + p * (current + alternative)
-      // For simplicity, we're assuming if a route fails, we take the current best path again
+
       const directExpectedCost = (1 - failureProbability) * cost;
-      
-      const newExpectedCost = expectedDistance[minIndex] + directExpectedCost;
-      
-      // If this path is better, update it
+      const newExpectedCost = expectedDistance[current] + directExpectedCost;
+
       if (newExpectedCost < expectedDistance[to]) {
         expectedDistance[to] = newExpectedCost;
-        previous[to] = minIndex;
+        previous[to] = current;
+        pq.enqueue([to, newExpectedCost], newExpectedCost);
       }
     }
   }
-  
-  // Check if destination is reachable
+
   if (expectedDistance[destinationId] === Infinity) {
     return {
       expectedCost: 0,
@@ -99,8 +84,7 @@ export function calculateExpectedShortestPath(
       message: "No viable path exists to the destination."
     };
   }
-  
-  // Reconstruct the path
+
   const path: number[] = [];
   let current = destinationId;
   while (current !== sourceId) {
@@ -111,18 +95,19 @@ export function calculateExpectedShortestPath(
         expectedCost: 0,
         path: [],
         success: false,
-        message: "Path reconstruction error. Please check your network configuration."
+        message: "Path reconstruction error."
       };
     }
   }
   path.unshift(sourceId);
-  
+
   return {
     expectedCost: expectedDistance[destinationId],
     path,
     success: true
   };
 }
+
 
 // Calculate layout positions for visualizing the network
 export function calculateNetworkLayout(network: Network): Network {

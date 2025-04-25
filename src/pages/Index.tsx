@@ -84,7 +84,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-space-gradient relative">
+    <div className="min-h-screen relative">
       {/* Starry background */}
       <div className="stars-container">
         {Array.from({ length: 200 }).map((_, index) => (
@@ -101,7 +101,7 @@ const Index = () => {
       </div>
 
       {/* Header */}
-      <header className="py-6 px-4 border-b border-space-nebula-purple backdrop-blur-sm bg-space-deep-blue bg-opacity-30">
+      <header className="py-6 px-4 border-b backdrop-blur-sm bg-opacity-30">
         <div className="container mx-auto">
           <div className="flex items-center justify-center text-center">
             <Navigation size={32} className="text-space-route-teal mr-3 animate-glow" />
@@ -127,7 +127,7 @@ const Index = () => {
           <div className="space-y-6">
             {network && (
               <div className="rounded-lg overflow-hidden">
-                <div className="bg-space-cosmic-blue bg-opacity-30 p-4 backdrop-blur-sm border border-space-nebula-purple rounded-lg">
+                <div className="bg-opacity-30 p-4 backdrop-blur-sm border rounded-lg">
                   <h2 className="text-2xl font-bold text-white mb-4">Network Visualization</h2>
                   <NetworkGraph
                     network={network}

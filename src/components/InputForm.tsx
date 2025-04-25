@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -106,14 +105,14 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-space-cosmic-blue bg-opacity-30 p-6 rounded-lg backdrop-blur-sm border border-space-nebula-purple">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-opacity-30 p-6 rounded-lg backdrop-blur-sm border border-space-nebula-purple">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-white">Network Configuration</h2>
         <Button
           type="button"
           variant="outline"
           onClick={useSampleData}
-          className="bg-space-nebula-purple hover:bg-opacity-80 text-white border-space-route-teal"
+          className="text-white"
         >
           Use Sample Data
         </Button>
@@ -121,30 +120,30 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
       
       <div className="space-y-4">
         <div>
-          <Label htmlFor="numPlanets" className="text-space-star-yellow">Number of Planets</Label>
+          <Label htmlFor="numPlanets">Number of Planets</Label>
           <Input
             id="numPlanets"
             type="number"
             min="2"
             value={numPlanets}
             onChange={handleNumPlanetsChange}
-            className="bg-space-deep-blue border-space-nebula-purple text-white"
+            className="my-2 text-white"
           />
         </div>
 
         <div className="grid gap-4">
-          <h3 className="text-lg font-semibold text-space-route-teal">Planet Names</h3>
+          <h3 className="text-lg font-semibold">Planet Names</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {planets.map((planet, index) => (
               <div key={`planet-${index}`} className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-space-cosmic-blue flex items-center justify-center text-white border border-space-route-teal">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white border">
                   {planet.id}
                 </div>
                 <Input
                   value={planet.name}
                   onChange={(e) => handlePlanetChange(index, e.target.value)}
                   placeholder={`Planet ${index} name`}
-                  className="bg-space-deep-blue border-space-nebula-purple text-white"
+                  className="text-white"
                 />
               </div>
             ))}
@@ -153,13 +152,13 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
 
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-space-route-teal">Routes</h3>
+            <h3 className="text-lg font-semibold">Routes</h3>
             <Button
               type="button"
               variant="outline"
               onClick={addRoute}
               size="sm"
-              className="bg-space-cosmic-blue hover:bg-opacity-80 text-white border-space-route-teal flex items-center gap-1"
+              className="text-white flex items-center gap-1"
             >
               <PlusCircle size={16} />
               Add Route
@@ -168,11 +167,11 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
           
           <div className="space-y-4">
             {routes.map((route, index) => (
-              <Card key={`route-${index}`} className="bg-space-deep-blue border-space-nebula-purple">
-                <CardContent className="pt-4">
+              <Card key={`route-${index}`}>
+                <CardContent className="pt-2">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <RouteIcon size={16} className="text-space-route-teal" />
+                      <RouteIcon size={16} />
                       <span className="text-white font-medium">Route {index + 1}</span>
                     </div>
                     <Button
@@ -180,21 +179,21 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
                       variant="ghost"
                       size="sm"
                       onClick={() => removeRoute(index)}
-                      className="text-space-danger-red hover:text-white hover:bg-space-danger-red h-8"
+                      className="text-red-400 hover:text-white h-8"
                     >
                       <MinusCircle size={16} />
                       <span className="ml-1">Remove</span>
                     </Button>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4 mb-2">
+                  <div className="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                      <Label htmlFor={`route-from-${index}`} className="text-space-star-yellow">From</Label>
+                      <Label htmlFor={`route-from-${index}`} className="pb-2">From</Label>
                       <select
                         id={`route-from-${index}`}
                         value={route.from}
                         onChange={(e) => handleRouteChange(index, 'from', parseInt(e.target.value))}
-                        className="w-full h-9 px-3 py-2 rounded-md border border-space-nebula-purple bg-space-deep-blue text-white"
+                        className="w-full h-9 px-3 py-2 rounded-md border text-white"
                       >
                         {planets.map((planet) => (
                           <option key={`from-${planet.id}`} value={planet.id}>
@@ -204,12 +203,12 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
                       </select>
                     </div>
                     <div>
-                      <Label htmlFor={`route-to-${index}`} className="text-space-star-yellow">To</Label>
+                      <Label htmlFor={`route-to-${index}`} className="pb-2">To</Label>
                       <select
                         id={`route-to-${index}`}
                         value={route.to}
                         onChange={(e) => handleRouteChange(index, 'to', parseInt(e.target.value))}
-                        className="w-full h-9 px-3 py-2 rounded-md border border-space-nebula-purple bg-space-deep-blue text-white"
+                        className="w-full h-9 px-3 py-2 rounded-md border text-white"
                       >
                         {planets.map((planet) => (
                           <option key={`to-${planet.id}`} value={planet.id}>
@@ -222,18 +221,18 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
                   
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor={`route-cost-${index}`} className="text-space-star-yellow">Cost</Label>
+                      <Label htmlFor={`route-cost-${index}`} className="pb-2">Cost</Label>
                       <Input
                         id={`route-cost-${index}`}
                         type="number"
                         min="1"
                         value={route.cost}
                         onChange={(e) => handleRouteChange(index, 'cost', parseInt(e.target.value) || 0)}
-                        className="bg-space-deep-blue border-space-nebula-purple text-white"
+                        className="text-white"
                       />
                     </div>
                     <div>
-                      <Label htmlFor={`route-failure-${index}`} className="text-space-star-yellow">Failure Probability (0-0.99)</Label>
+                      <Label htmlFor={`route-failure-${index}`} className="pb-2">Failure Probability (0-0.99)</Label>
                       <Input
                         id={`route-failure-${index}`}
                         type="number"
@@ -242,7 +241,7 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
                         step="0.01"
                         value={route.failureProbability}
                         onChange={(e) => handleRouteChange(index, 'failureProbability', parseFloat(e.target.value) || 0)}
-                        className="bg-space-deep-blue border-space-nebula-purple text-white"
+                        className="text-white"
                       />
                     </div>
                   </div>
@@ -254,12 +253,12 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="sourceId" className="text-space-star-yellow">Source Planet</Label>
+            <Label htmlFor="sourceId" className="mb-2">Source Planet</Label>
             <select
               id="sourceId"
               value={sourceId}
               onChange={(e) => setSourceId(parseInt(e.target.value))}
-              className="w-full h-9 px-3 py-2 rounded-md border border-space-nebula-purple bg-space-deep-blue text-white"
+              className="w-full h-9 px-3 py-2 rounded-md border text-white"
             >
               {planets.map((planet) => (
                 <option key={`source-${planet.id}`} value={planet.id}>
@@ -269,12 +268,12 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
             </select>
           </div>
           <div>
-            <Label htmlFor="destinationId" className="text-space-star-yellow">Destination Planet</Label>
+            <Label htmlFor="destinationId" className="mb-2">Destination Planet</Label>
             <select
               id="destinationId"
               value={destinationId}
               onChange={(e) => setDestinationId(parseInt(e.target.value))}
-              className="w-full h-9 px-3 py-2 rounded-md border border-space-nebula-purple bg-space-deep-blue text-white"
+              className="w-full h-9 px-3 py-2 rounded-md border text-white"
             >
               {planets.map((planet) => (
                 <option key={`dest-${planet.id}`} value={planet.id}>
@@ -288,7 +287,7 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit, useSampleData }) => {
         <div className="flex justify-center pt-4">
           <Button
             type="submit"
-            className="bg-space-route-teal hover:bg-opacity-80 text-space-deep-blue font-bold px-8 py-2 rounded-md text-lg"
+            className="bg-white text-black hover:bg-opacity-80 font-bold px-8 py-2 rounded-md text-lg"
           >
             Calculate Expected Route
           </Button>
