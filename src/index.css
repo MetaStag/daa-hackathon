@@ -1,0 +1,134 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 240 28% 9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 20% 13%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 20% 13%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 176 100% 45%;
+    --primary-foreground: 240 30% 10%;
+
+    --secondary: 266 98% 18%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 15% 16%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 59 94% 67%;
+    --accent-foreground: 240 30% 10%;
+
+    --destructive: 358 97% 68%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 20% 20%;
+    --input: 240 15% 20%;
+    --ring: 176 100% 45%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 240 28% 11%;
+    --sidebar-foreground: 240 5% 85%;
+    --sidebar-primary: 176 100% 45%;
+    --sidebar-primary-foreground: 240 30% 10%;
+    --sidebar-accent: 240 15% 16%;
+    --sidebar-accent-foreground: 240 5% 85%;
+    --sidebar-border: 240 15% 16%;
+    --sidebar-ring: 176 100% 45%;
+  }
+}
+
+@layer base {
+
+  body {
+    @apply min-h-screen;
+    font-family: 'Inter', sans-serif;
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--background));
+    background: radial-gradient(circle at 50% 50%, #0b0d1a, #0a0e2a, #08122e);
+    background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden; /* Allow vertical scrolling */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  /* Starry background */
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite ease-in-out;
+  }
+
+  /* Twinkling animation */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+@layer utilities {
+  .stars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+.node {
+  transition: all 0.3s ease;
+}
+
+.node:hover {
+  filter: brightness(1.5);
+  transform: scale(1.1);
+}
+
+.edge {
+  transition: stroke 0.3s ease;
+}
+
+.edge:hover {
+  stroke-width: 3;
+}
+
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
