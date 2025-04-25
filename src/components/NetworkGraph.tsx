@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef } from 'react';
-import { Network, Planet, Route } from '@/utils/routeCalculator';
+import { Network } from '@/utils/routeCalculator';
 
 interface NetworkGraphProps {
   network: Network;

@@ -1,4 +1,3 @@
-
 // Data types for the interplanetary network
 export interface Planet {
   id: number;
@@ -80,7 +79,6 @@ export function calculateExpectedShortestPath(
       // Calculate expected cost: (1-p) * direct + p * (current + alternative)
       // For simplicity, we're assuming if a route fails, we take the current best path again
       const directExpectedCost = (1 - failureProbability) * cost;
-      const failureExpectedCost = failureProbability * (expectedDistance[minIndex] + expectedDistance[to]);
       
       const newExpectedCost = expectedDistance[minIndex] + directExpectedCost;
       
